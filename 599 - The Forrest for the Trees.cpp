@@ -20,7 +20,6 @@ vector<int>edg[30];
 int N , Acrons ;
 bool Vis[30];
 
-
 void Input(){
     string s ;
     map<char,int>Map ;
