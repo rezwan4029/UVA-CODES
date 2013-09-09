@@ -47,6 +47,7 @@ void p()
         cout<<endl;
     }
 }
+
 int main()
 {
     int T;
