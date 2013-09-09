@@ -42,6 +42,5 @@ int main()
             cout<< it->first << endl;
             break ;
         }
-
     }
 }
