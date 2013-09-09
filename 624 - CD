@@ -1,0 +1,35 @@
+#include<stdio.h>
+#define MAX 10005
+
+int C[MAX], W[25];
+int mark[25][MAX];
+int MW,w, n,i;
+int main()
+{
+
+    while( scanf( "%d", &MW) == 1)
+    {
+        scanf("%d",&n);
+        memset( mark,0,sizeof (mark));
+        memset( C, 0, sizeof (C));
+        for( i = 1; i <= n; i ++) scanf( "%d", &W[i]);
+        for(i=n; i >= 1; i --)
+        {
+            for(w = MW; w >= 0; w --)
+                if( w >= W[i])
+                    if( C[w] < C[w - W[i] ] + W[i] )
+                    {
+                        C[w] = C[w - W[i]] + W[i];
+                        mark[i][w] = 1;
+                    }
+        }
+        w = C[MW];
+        for(i = 1; i <= n, w > 0; i++)
+                if(mark[i][w]) {
+                    printf( "%d ", W[i]);
+                    w -= W[i];
+                }
+        printf( "sum:%d\n", C[MW]);
+    }
+    return 0;
+}
