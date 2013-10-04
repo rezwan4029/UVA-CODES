@@ -99,11 +99,33 @@ struct point {
     }
 };
 
+struct line { // Creates a line with equation ax + by + c = 0
+    double a, b, c;
+    line(){}
+    line( point p1,point p2 ) {
+        a = p2.y - p1.y;
+        b = p1.x - p2.x;
+        c = a*p1.x + b*p1.y ;
+    }
+    bool is_parallel(line &l) {
+        return (abs(a * l.b - b * l.a) < EPS );
+    }
+    bool intersection( line L, point &p ) { // returns intersection point of Two Lines
+        double det = a * L.b - b * L.a;
+        if( equal( det, 0 ) ) {
+            if( (c - a)/b == (L.c - L.a)/L.b ) ; //sameLine = true ; // if two lines lies in same
+            return false; // parallel
+        }
+        p.x = ( L.b * c - b * L.c ) / det;
+        p.y = ( L.c * a - c * L.a ) / det;
+        return true;
+    }
+};
 
 point P[105];
 
 int main(){
-    freopen("in.txt", "r", stdin);
+    //freopen("in.txt", "r", stdin);
     int test = II ;
     For(cs,test){
         int n = II ;
@@ -114,8 +136,12 @@ int main(){
         double dist = Curr.dis( P[0] );
         forab(i,2,n-1){
             if( P[i].y < Curr.y )continue ;
-            double theta = atan( (P[i].x-P[i-1].x)/ (P[i].y-P[i-1].y)) ;
-            dist += ( ( P[i].y - Curr.y ) / cos( theta ) );
+            line A = line( P[i] , P[i-1] );
+            line B = line( Curr , point(0,Curr.y) );
+            //cout << B.a << "  " << B.b <<  "  " << B.c << endl;
+            point hit ;
+            A.intersection(B,hit);
+            dist += ( P[i].dis(hit) ) ;
             Curr = P[i];
         }
         printf("%.2lf\n",dist);
