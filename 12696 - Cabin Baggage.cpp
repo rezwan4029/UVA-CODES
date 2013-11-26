@@ -30,7 +30,6 @@ typedef pair<double,double>pdd;
 
 const double INF = 1000000;
 
-
 int main(){
     //freopen("in.txt","r",stdin);
     int n ;
