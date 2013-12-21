@@ -78,9 +78,8 @@ int main(){
             if( team[i] > n ) ok = false ;
         }
         For(i,n)  table[i].sz = II , table[i].id = i ;
-
-        if( !fnc() || !ok ) puts("0");
-
+        if( !ok ) { puts("0"); continue ; }
+        else if( !fnc() ) puts("0");
         else {
             puts("1");
             for( int i = 1 ; i <= m ; i++ ){
