@@ -155,10 +155,13 @@ struct Seg {
     point s, e;
 };
 
-int inInterval(Seg a, point p) {
-    return  min(a.s.x, a.e.x) <= p.x && p.x <= max(a.s.x, a.e.x) &&
-            min(a.s.y, a.e.y) <= p.y && p.y <= max(a.s.y, a.e.y) ;
+inline bool onsegment(const point &p1, const point &p2, const point &p3) {
+    point pmn, pmx;
+    pmn.x = min(p1.x, p2.x), pmn.y = min(p1.y, p2.y);
+    pmx.x = max(p1.x, p2.x), pmx.y = max(p1.y, p2.y);
+    return pmn.x <= p3.x && p3.x <= pmx.x && pmn.y <= p3.y && p3.y <= pmx.y;
 }
+
 
 int SegmentIntersection(Seg a, Seg b, point &p) {
     double a1 = a.s.y - a.e.y, b1 = -a.s.x + a.e.x;
@@ -170,7 +173,7 @@ int SegmentIntersection(Seg a, Seg b, point &p) {
     double Dy = a1 * c2  - a2 * c1;
     if( fabs(D) < EPS ) return 0; // NONE or LINE
     p.x = Dx/D , p.y = Dy/D;
-    return inInterval(a, p) == 1 && inInterval(b, p) == 1;
+    return onsegment(a.s , a.e , p) && onsegment(b.s , b.e , p) ;
 }
 
 
