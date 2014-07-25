@@ -58,11 +58,11 @@ template<class T>inline bool read(T &x){int c=gc();int sgn=1;while(~c&&c<'0'||c>
 //int dx[]={1,1,0,-1,-1,-1,0,1};int dy[]={0,1,1,1,0,-1,-1,-1};//8 direction
 //int dx[]={2,1,-1,-2,-2,-1,1,2};int dy[]={1,2,2,1,-1,-2,-2,-1};//Knight Direction
 //int dx[]={2,1,-1,-2,-1,1};int dy[]={0,1,1,0,-1,-1}; //Hexagonal Direction
-
-const unsigned MX = 16667 , MAX_S = sqrt(MX/60);
-unsigned short composite[MX];
+const int MX = 1e6 + 7 ;
+const unsigned MXN = 16667 , MAX_S = sqrt(MXN/60);
+unsigned short composite[MXN];
 vector<int> pr;
-bool isPrime[1000007];
+bool isPrime[MX];
 void sieve() {
     unsigned w[16] = {1, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 49, 53, 59};
     unsigned mod[16][16], di[16][16], num;
@@ -74,7 +74,7 @@ void sieve() {
     pr.push_back(2) , pr.push_back(3) , pr.push_back(5);
     isPrime[2] = isPrime[3] = isPrime[5] = true ;
     memset(composite, 0, sizeof composite);
-    for(unsigned i = 0; i < MX; i++)
+    for(unsigned i = 0; i < MXN; i++)
         for(int j = (i==0); j < 16; j++) {
             if(composite[i] & (1<<j)) continue;
             pr.push_back( num = 60 * i + w[j] );
@@ -84,7 +84,7 @@ void sieve() {
                 for(int l = (k == 0); l < 16 && !done; l++)
                 {
                     unsigned mult = k * num + i * w[l] + di[j][l];
-                    if( mult >= MX ) done = true;
+                    if( mult >= MXN ) done = true;
                     else composite[mult] |= 1<<mod[j][l];
                 }
         }
@@ -103,21 +103,18 @@ string toString(Long number){
 bool isCircular(int x ){
     string num = toString(x);
     int len = num.size();
-    for( int i = 0 ; i < len ; i++ ){
-        string st , en ;
-        rep(j,i) st += num[j];
-        forab(j,i,len-1) en += num[j];
-        string cur = en + st ;
+    rep(i,len){
+        string cur = num.substr(i,len-i)  + num.substr(0,i) ;
         int val = toInt(cur);
         if( isPrime[val] == false ) return false ;
     }
     return true ;
 }
-int dp[1000007];
+int dp[MX];
 int main(){
     //FI;
     sieve();
-    forab(i,100,1000000) {
+    forab(i,100,MX-7) {
         if( isPrime[i] )
             dp[i] += dp[i-1] + isCircular(i);
         else
