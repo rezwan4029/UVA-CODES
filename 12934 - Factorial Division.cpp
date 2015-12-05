@@ -63,7 +63,6 @@ template<class T>inline bool read(T &x){int c=gc();int sgn=1;while(~c&&c<'0'||c>
 const Long INF = 1e9 ;
 
 vector<Long> P[N+7];
-
 map<Long, pii> hash;
 
 void generateNcR(){
