@@ -70,7 +70,7 @@ void generateNcR(){
     hash.clear();
 	For(i,N) P[i].pb(i);
 	forab(i, 2, N) {
-        For(j, i-1) {
+    	For(j, i-1) {
 			P[i].pb( P[i].back() * ( i - j ) );
 			if( P[i].back() > INF ) break;
         }
