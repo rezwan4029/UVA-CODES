@@ -34,7 +34,7 @@ public class Main {
 			}
 		}
 		
-		private Foot getRowOfFoot(char grid[][]) {
+		private Foot findFootLocation(char grid[][]) {
 			for (int i = 0; i < SZ; i++) {
 				for (int j = 0; j < SZ; j++) {
 					if(grid[i][j] == '>' || grid[i][j] == '<'){
@@ -75,7 +75,7 @@ public class Main {
 			for(int i = 0 ; i < SZ ; i++){
 				grid[i] = in.next().toCharArray();
 			}
-			Foot foot = this.getRowOfFoot(grid);
+			Foot foot = this.findFootLocation(grid);
 			out.println("Case " + testNumber + ": " + (isNoBall(grid, foot) ? "No Ball" : "Thik Ball"));
 		}
 	}
